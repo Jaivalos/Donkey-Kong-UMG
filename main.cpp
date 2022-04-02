@@ -27,22 +27,22 @@ char mapa[MAXFILAS][MAXCOLS] = {
 	"X                            X",
 	"X                            X",
 	"X                            X",
-	"X            XXX             X",
+	"X            X X             X",
 	"X             -              X",
 	"X             -              X",
 	"X             -              X",
-	"XXXXXXXXXXXXXXXXXXXXXXXXXX   X",
+	"XXXXXXXXXXXXXXXXXXXXXX XXX   X",
 	"X                     -      X",
 	"X                     -      X",
 	"X                     -      X",
-	"X     XXXXXXXXXXXXXXXXXXXXXXXX",
+	"X     X XXXXXXXXXXXXXXXXXXXXXX",
 	"X      -                     X",
 	"X      -                     X",
 	"X      -                     X",
 	"X      -                     X",
-	"XXXXXXXXXXXXXXXXXX           X",
+	"XXXXXXXXXXXXXXX XX           X",
 	"X              -             X",
-	"X              -             X",
+	"X..............-.............X",
 	"X              -             X",
 	"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 };
@@ -115,13 +115,29 @@ int main() {
 		else if(key[KEY_UP]) dir = 2;
 		else if(key[KEY_DOWN]) dir = 3;
 		
-		if(dir == 0) {
-			px = px; py = py;
-		};
-		if(dir == 0) px += 20;
-		if(dir == 1) px -= 20;
-		if(dir == 2) py -= 20;
-		if(dir == 3) py += 20;
+		if(dir == 0){
+			if((mapa[py/30][(px+30)/30] != 'X') || (mapa[py/30][(px+30)/30] != '.') ){
+				px += 30;
+			}else dir = 4;
+		}
+		
+		if(dir == 1){
+			if((mapa[py/30][(px-30)/30] != 'X') || (mapa[py/30][(px-30)/30] != '.')){
+				px -= 30;
+			}else dir = 4;
+		}
+		
+		if(dir == 2){
+			if((mapa[(py-30)/30][px/30] != 'X') || (mapa[(py-30)/30][px/30] != '.')){
+				py -= 30;
+			}else dir = 4;
+		}
+		
+		if(dir == 3){
+			if((mapa[(py+30)/30][px/30] != 'X') || (mapa[(py+30)/30][px/30] != '.')){
+				py += 30;
+			}else dir = 4;
+		}
 		
 		clear(buffer);
 		
@@ -130,7 +146,7 @@ int main() {
 		dibujar_monito_peach();
 		pantalla();
 		
-		rest(100);
+		rest(200);
 	}
 	
 }
