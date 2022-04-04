@@ -24,24 +24,24 @@ int px = 30*1, py=30*19;
 
 //Creamos la matriz para el mapa
 char mapa[MAXFILAS][MAXCOLS] = {
-	"X                            X",
-	"X                            X",
-	"X                            X",
-	"X            X X             X",
-	"X             -              X",
-	"X             -              X",
-	"X             -              X",
-	"XXXXXXXXXXXXXXXXXXXXXX XXX   X",
-	"X                     -      X",
-	"X                     -      X",
-	"X                     -      X",
-	"X     X XXXXXXXXXXXXXXXXXXXXXX",
-	"X      -                     X",
-	"X      -                     X",
-	"X      -                     X",
-	"X      -                     X",
-	"XXXXXXXXXXXXXXX XX           X",
-	"X              -             X",
+	"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+	"X............................X",
+	"X............   .............X",
+	"X............XxX.............X",
+	"X.............-..............X",
+	"X.............-..............X",
+	"X             -           ...X",
+	"XXXXXXXXXXXXXXXXXXXXXXxXXX...X",
+	"X.....................-......X",
+	"X.....................-......X",
+	"X.....                -      X",
+	"X.....XxXXXXXXXXXXXXXXXXXXXXXX",
+	"X......-.....................X",
+	"X......-.....................X",
+	"X......-.....................X",
+	"X      -          ...........X",
+	"XXXXXXXXXXXXXXXxXX...........X",
+	"X..............-.............X",
 	"X..............-.............X",
 	"X              -             X",
 	"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -57,6 +57,14 @@ void dibujar_mapa(){
 		for(col = 0; col < MAXCOLS; col++){
 			//Intercambiamos el valor de X por la imagen del piso
 			if(mapa[row][col] == 'X'){
+				draw_sprite(buffer, floor, col*30, row*30);
+			}
+		}
+	}
+	for(row = 0; row < MAXFILAS; row ++){
+		for(col = 0; col < MAXCOLS; col++){
+			//Intercambiamos el valor de X por la imagen del piso
+			if(mapa[row][col] == 'x'){
 				draw_sprite(buffer, floor, col*30, row*30);
 			}
 		}
@@ -116,26 +124,30 @@ int main() {
 		else if(key[KEY_DOWN]) dir = 3;
 		
 		if(dir == 0){
-			if((mapa[py/30][(px+30)/30] != 'X') || (mapa[py/30][(px+30)/30] != '.') ){
+			if((mapa[py/30][(px+30)/30] != 'X') && (mapa[py/30][(px+30)/30] != '.') ){
 				px += 30;
+				dir = 4;
 			}else dir = 4;
 		}
 		
 		if(dir == 1){
-			if((mapa[py/30][(px-30)/30] != 'X') || (mapa[py/30][(px-30)/30] != '.')){
+			if((mapa[py/30][(px-30)/30] != 'X') && (mapa[py/30][(px-30)/30] != '.')){
 				px -= 30;
+				dir = 4;
 			}else dir = 4;
 		}
 		
 		if(dir == 2){
-			if((mapa[(py-30)/30][px/30] != 'X') || (mapa[(py-30)/30][px/30] != '.')){
+			if((mapa[(py-30)/30][px/30] != 'X') && (mapa[(py-30)/30][px/30] != '.')){
 				py -= 30;
+				dir = 4;
 			}else dir = 4;
 		}
 		
 		if(dir == 3){
-			if((mapa[(py+30)/30][px/30] != 'X') || (mapa[(py+30)/30][px/30] != '.')){
+			if((mapa[(py+30)/30][px/30] != 'X') && (mapa[(py+30)/30][px/30] != '.')){
 				py += 30;
+				dir = 4;
 			}else dir = 4;
 		}
 		
