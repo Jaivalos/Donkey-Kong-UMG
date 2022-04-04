@@ -126,28 +126,28 @@ int main() {
 		if(dir == 0){
 			if((mapa[py/30][(px+30)/30] != 'X') && (mapa[py/30][(px+30)/30] != '.') ){
 				px += 30;
-				dir = 4;
+//				dir = 4;
 			}else dir = 4;
 		}
 		
 		if(dir == 1){
 			if((mapa[py/30][(px-30)/30] != 'X') && (mapa[py/30][(px-30)/30] != '.')){
 				px -= 30;
-				dir = 4;
+//				dir = 4;
 			}else dir = 4;
 		}
 		
 		if(dir == 2){
 			if((mapa[(py-30)/30][px/30] != 'X') && (mapa[(py-30)/30][px/30] != '.')){
 				py -= 30;
-				dir = 4;
+//				dir = 4;
 			}else dir = 4;
 		}
 		
 		if(dir == 3){
 			if((mapa[(py+30)/30][px/30] != 'X') && (mapa[(py+30)/30][px/30] != '.')){
 				py += 30;
-				dir = 4;
+//				dir = 4;
 			}else dir = 4;
 		}
 		
