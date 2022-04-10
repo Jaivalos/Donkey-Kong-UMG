@@ -114,9 +114,13 @@ int main() {
 	
 	peach = load_bitmap("peach.bmp",NULL);
 	
+//	dibujar_personaje();
+	
 	while(!key[KEY_ESC]){
 		
 		//Rutina para mover a mario
+		
+//		dibujar_personaje();
 		
 		if(key[KEY_RIGHT]) dir = 0;
 		else if(key[KEY_LEFT]) dir = 1;
@@ -126,28 +130,36 @@ int main() {
 		if(dir == 0){
 			if((mapa[py/30][(px+30)/30] != 'X') && (mapa[py/30][(px+30)/30] != '.') ){
 				px += 30;
-//				dir = 4;
+				dibujar_personaje();
+				dir = 4;
+//				dibujar_personaje();
 			}else dir = 4;
 		}
 		
 		if(dir == 1){
 			if((mapa[py/30][(px-30)/30] != 'X') && (mapa[py/30][(px-30)/30] != '.')){
 				px -= 30;
-//				dir = 4;
+				dibujar_personaje();
+				dir = 4;
+//				dibujar_personaje();
 			}else dir = 4;
 		}
 		
 		if(dir == 2){
 			if((mapa[(py-30)/30][px/30] != 'X') && (mapa[(py-30)/30][px/30] != '.')){
 				py -= 30;
-//				dir = 4;
+				dibujar_personaje();
+				dir = 4;
+//				dibujar_personaje();
 			}else dir = 4;
 		}
 		
 		if(dir == 3){
 			if((mapa[(py+30)/30][px/30] != 'X') && (mapa[(py+30)/30][px/30] != '.')){
 				py += 30;
-//				dir = 4;
+				dibujar_personaje();
+				dir = 4;
+//				dibujar_personaje();
 			}else dir = 4;
 		}
 		
