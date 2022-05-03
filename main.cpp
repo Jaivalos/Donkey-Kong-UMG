@@ -94,6 +94,14 @@ void dibujar_monito_peach(){
 	draw_sprite(buffer, peach, 390, 40);
 } 
 
+void pintar(){
+	clear(buffer);
+	dibujar_mapa();
+	dibujar_personaje();
+	dibujar_monito_peach();
+	pantalla();
+}
+
 int main() {
 	
 	allegro_init();
@@ -153,38 +161,19 @@ int main() {
 //				dibujar_personaje();
 			}else{
 				py -= 30;
-				clear(buffer);
-				dibujar_mapa();
-				dibujar_personaje();
-				dibujar_monito_peach();
-				pantalla();
-				
+				pintar();
 				rest(100);
 				
 				py -= 30;
-				clear(buffer);
-				dibujar_mapa();
-				dibujar_personaje();
-				dibujar_monito_peach();
-				pantalla();
-				
+				pintar();
 				rest(100);
 				
 				py += 30;
-				clear(buffer);
-				dibujar_mapa();
-				dibujar_personaje();
-				dibujar_monito_peach();
-				pantalla();
-				
+				pintar();
 				rest(100);
 				
 				py += 30;
-				clear(buffer);
-				dibujar_mapa();
-				dibujar_personaje();
-				dibujar_monito_peach();
-				pantalla();
+				pintar();
 				
 				dir = 4;
 			};
@@ -199,12 +188,7 @@ int main() {
 			}else dir = 4;
 		}
 		
-		clear(buffer);
-		
-		dibujar_mapa();
-		dibujar_personaje();
-		dibujar_monito_peach();
-		pantalla();
+		pintar();
 		
 		rest(200);
 	}
