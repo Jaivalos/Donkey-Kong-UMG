@@ -151,7 +151,43 @@ int main() {
 				dibujar_personaje();
 				dir = 4;
 //				dibujar_personaje();
-			}else dir = 4;
+			}else{
+				py -= 30;
+				clear(buffer);
+				dibujar_mapa();
+				dibujar_personaje();
+				dibujar_monito_peach();
+				pantalla();
+				
+				rest(100);
+				
+				py -= 30;
+				clear(buffer);
+				dibujar_mapa();
+				dibujar_personaje();
+				dibujar_monito_peach();
+				pantalla();
+				
+				rest(100);
+				
+				py += 30;
+				clear(buffer);
+				dibujar_mapa();
+				dibujar_personaje();
+				dibujar_monito_peach();
+				pantalla();
+				
+				rest(100);
+				
+				py += 30;
+				clear(buffer);
+				dibujar_mapa();
+				dibujar_personaje();
+				dibujar_monito_peach();
+				pantalla();
+				
+				dir = 4;
+			};
 		}
 		
 		if(dir == 3){
