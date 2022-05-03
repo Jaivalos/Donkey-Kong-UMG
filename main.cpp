@@ -35,7 +35,7 @@ char mapa[MAXFILAS][MAXCOLS] = {
 	"X.....................-......X",
 	"X.....................-......X",
 	"X.....                -      X",
-	"X.....XxXXXXXXXXXXXXXXXXXXXXXX",
+	"X..XXXXxXXXXXXXXXXXXXXXXXXXXXX",
 	"X......-.....................X",
 	"X......-.....................X",
 	"X......-.....................X",
@@ -162,15 +162,15 @@ int main() {
 			}else{
 				py -= 30;
 				pintar();
-				rest(100);
+				rest(155);
 				
 				py -= 30;
 				pintar();
-				rest(100);
+				rest(155);
 				
 				py += 30;
 				pintar();
-				rest(100);
+				rest(155);
 				
 				py += 30;
 				pintar();
