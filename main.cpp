@@ -104,7 +104,7 @@ void dibujar_barril_parado(){
 
 //Dibujamos el barril que rueda
 void dibujar_barril(){
-	draw_sprite(buffer, barril, 130, 70);
+	draw_sprite(buffer, barril, 160, 180);
 } 
 
 void pintar(){
@@ -113,6 +113,7 @@ void pintar(){
 	dibujar_personaje();
 	dibujar_monito_peach();
 	dibujar_barril_parado();
+	dibujar_barril();
 	pantalla();
 }
 
@@ -135,6 +136,7 @@ int main() {
 	monito = load_bitmap("DK2.bmp",NULL);
 	peach = load_bitmap("peach.bmp",NULL);
 	barril_parado = load_bitmap("barril_parado.bmp",NULL);
+	barril = load_bitmap("barril.bmp",NULL);
 	
 //	dibujar_personaje();
 	
