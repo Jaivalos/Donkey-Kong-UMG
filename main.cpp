@@ -14,6 +14,9 @@ BITMAP *escalera;
 BITMAP *mariobmp;
 BITMAP *mario;
 
+BITMAP *barril_parado;
+BITMAP *barril;
+
 BITMAP *monito;
 BITMAP *peach;
 
@@ -94,11 +97,22 @@ void dibujar_monito_peach(){
 	draw_sprite(buffer, peach, 390, 40);
 } 
 
+//Dibujamos el barril en la mano del mono
+void dibujar_barril_parado(){
+	draw_sprite(buffer, barril_parado, 130, 70);
+} 
+
+//Dibujamos el barril que rueda
+void dibujar_barril(){
+	draw_sprite(buffer, barril, 130, 70);
+} 
+
 void pintar(){
 	clear(buffer);
 	dibujar_mapa();
 	dibujar_personaje();
 	dibujar_monito_peach();
+	dibujar_barril_parado();
 	pantalla();
 }
 
@@ -119,8 +133,8 @@ int main() {
 	mario = create_bitmap(33,32);
 	
 	monito = load_bitmap("DK2.bmp",NULL);
-	
 	peach = load_bitmap("peach.bmp",NULL);
+	barril_parado = load_bitmap("barril_parado.bmp",NULL);
 	
 //	dibujar_personaje();
 	
