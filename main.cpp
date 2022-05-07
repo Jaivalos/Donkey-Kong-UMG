@@ -14,6 +14,9 @@ BITMAP *escalera;
 BITMAP *mariobmp;
 BITMAP *mario;
 
+BITMAP *barril_parado;
+BITMAP *barril;
+
 BITMAP *monito;
 BITMAP *peach;
 
@@ -24,25 +27,25 @@ int px = 30*1, py=30*19;
 
 //Creamos la matriz para el mapa
 char mapa[MAXFILAS][MAXCOLS] = {
-	"X                            X",
-	"X                            X",
-	"X                            X",
-	"X            XXX             X",
-	"X             -              X",
-	"X             -              X",
-	"X             -              X",
-	"XXXXXXXXXXXXXXXXXXXXXXXXXX   X",
-	"X                     -      X",
-	"X                     -      X",
-	"X                     -      X",
-	"X     XXXXXXXXXXXXXXXXXXXXXXXX",
-	"X      -                     X",
-	"X      -                     X",
-	"X      -                     X",
-	"X      -                     X",
-	"XXXXXXXXXXXXXXXXXX           X",
-	"X              -             X",
-	"X              -             X",
+	"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+	"X............................X",
+	"X............   .............X",
+	"X............XxX.............X",
+	"X.............-..............X",
+	"X.............-..............X",
+	"X             -           ...X",
+	"XXXXXXXXXXXXXXXXXXXXXXxXXX...X",
+	"X.....................-......X",
+	"X.....................-......X",
+	"X.....                -      X",
+	"X..XXXXxXXXXXXXXXXXXXXXXXXXXXX",
+	"X......-.....................X",
+	"X......-.....................X",
+	"X......-.....................X",
+	"X      -          ...........X",
+	"XXXXXXXXXXXXXXXxXX...........X",
+	"X..............-.............X",
+	"X..............-.............X",
 	"X              -             X",
 	"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 };
@@ -57,6 +60,14 @@ void dibujar_mapa(){
 		for(col = 0; col < MAXCOLS; col++){
 			//Intercambiamos el valor de X por la imagen del piso
 			if(mapa[row][col] == 'X'){
+				draw_sprite(buffer, floor, col*30, row*30);
+			}
+		}
+	}
+	for(row = 0; row < MAXFILAS; row ++){
+		for(col = 0; col < MAXCOLS; col++){
+			//Intercambiamos el valor de X por la imagen del piso
+			if(mapa[row][col] == 'x'){
 				draw_sprite(buffer, floor, col*30, row*30);
 			}
 		}
@@ -86,6 +97,26 @@ void dibujar_monito_peach(){
 	draw_sprite(buffer, peach, 390, 40);
 } 
 
+//Dibujamos el barril en la mano del mono
+void dibujar_barril_parado(){
+	draw_sprite(buffer, barril_parado, 130, 70);
+} 
+
+//Dibujamos el barril que rueda
+void dibujar_barril(){
+	draw_sprite(buffer, barril, 160, 180);
+} 
+
+void pintar(){
+	clear(buffer);
+	dibujar_mapa();
+	dibujar_personaje();
+	dibujar_monito_peach();
+	dibujar_barril_parado();
+	dibujar_barril();
+	pantalla();
+}
+
 int main() {
 	
 	allegro_init();
@@ -103,34 +134,79 @@ int main() {
 	mario = create_bitmap(33,32);
 	
 	monito = load_bitmap("DK2.bmp",NULL);
-	
 	peach = load_bitmap("peach.bmp",NULL);
+	barril_parado = load_bitmap("barril_parado.bmp",NULL);
+	barril = load_bitmap("barril.bmp",NULL);
+	
+//	dibujar_personaje();
 	
 	while(!key[KEY_ESC]){
 		
 		//Rutina para mover a mario
+		
+//		dibujar_personaje();
 		
 		if(key[KEY_RIGHT]) dir = 0;
 		else if(key[KEY_LEFT]) dir = 1;
 		else if(key[KEY_UP]) dir = 2;
 		else if(key[KEY_DOWN]) dir = 3;
 		
-		if(dir == 0) {
-			px = px; py = py;
-		};
-		if(dir == 0) px += 20;
-		if(dir == 1) px -= 20;
-		if(dir == 2) py -= 20;
-		if(dir == 3) py += 20;
+		if(dir == 0){
+			if((mapa[py/30][(px+30)/30] != 'X') && (mapa[py/30][(px+30)/30] != '.') ){
+				px += 30;
+				dibujar_personaje();
+				dir = 4;
+//				dibujar_personaje();
+			}else dir = 4;
+		}
 		
-		clear(buffer);
+		if(dir == 1){
+			if((mapa[py/30][(px-30)/30] != 'X') && (mapa[py/30][(px-30)/30] != '.')){
+				px -= 30;
+				dibujar_personaje();
+				dir = 4;
+//				dibujar_personaje();
+			}else dir = 4;
+		}
 		
-		dibujar_mapa();
-		dibujar_personaje();
-		dibujar_monito_peach();
-		pantalla();
+		if(dir == 2){
+			if((mapa[(py-30)/30][px/30] != 'X') && (mapa[(py-30)/30][px/30] != '.')){
+				py -= 30;
+				dibujar_personaje();
+				dir = 4;
+//				dibujar_personaje();
+			}else{
+				py -= 30;
+				pintar();
+				rest(155);
+				
+				py -= 30;
+				pintar();
+				rest(155);
+				
+				py += 30;
+				pintar();
+				rest(155);
+				
+				py += 30;
+				pintar();
+				
+				dir = 4;
+			};
+		}
 		
-		rest(100);
+		if(dir == 3){
+			if((mapa[(py+30)/30][px/30] != 'X') && (mapa[(py+30)/30][px/30] != '.')){
+				py += 30;
+				dibujar_personaje();
+				dir = 4;
+//				dibujar_personaje();
+			}else dir = 4;
+		}
+		
+		pintar();
+		
+		rest(200);
 	}
 	
 }
