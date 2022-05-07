@@ -30,8 +30,8 @@ int dir = 4;
 int px = 30*1, py=30*19;
 
 //direcci?n de movimiento y posici?n del barril
-int fdir = 0;
-int _x=160, _y=180;
+int fdir = 1;
+int _x=30*5, _y=30*6;
 
 
 //Creamos la matriz para el mapa
@@ -42,16 +42,16 @@ char mapa[MAXFILAS][MAXCOLS] = {
 	"X............XxX.............X",
 	"X.............-..............X",
 	"X.............-..............X",
-	"X             -      o    ...X",
+	"X             -      o    .|.X",
 	"XXXXXXXXXXXXXXXXXXXXXXxXXX...X",
 	"X.....................-......X",
 	"X.....................-......X",
-	"X.....      o         -      X",
+	"X|....      o         -      X",
 	"X..XXXXxXXXXXXXXXXXXXXXXXXXXXX",
 	"X......-.....................X",
 	"X......-.....................X",
 	"X......-.....................X",
-	"X  o   -          ...........X",
+	"X  o   -          ..|........X",
 	"XXXXXXXXXXXXXXXxXX...........X",
 	"X..............-.............X",
 	"X..............-.............X",
@@ -133,23 +133,41 @@ void dibujar_barril(){
 void moverbarril(){
 	dibujar_barril();
 	
-	//evaluamos que cuando no haya X se mueva a la derecha
-	if (fdir == 0){
-		if (mapa[_y/30][(_x+30)/30] != 'X') _x+=30;
-		else fdir = rand()%4;
+	if( mapa[ _y/30 ][ ( _x-30 )/30 ] == '|' ){
+		fdir = 2;
 	}
 	
-	//evaluamos que cuando no haya X se mueva hacia abajo
-	else if (fdir == 1){
-		if (mapa[(_x+30/30)][(_y)/30] != 'X') _y+=30;
-		else fdir = rand()%4;
+	if( fdir == 0 ){
+		if( mapa[ _y/30 ][ ( _x-30 )/30 ] != 'X' ) {
+			_x -= 30;
+		}else {
+			fdir = rand()%3;
+		}
 	}
 	
-	//evaluamos que cuando no haya X se mueva a la izquierda
-	else if (fdir == 2){
-		if (mapa[_y/30][(_x-30)/30] != 'X') _x-=30;
-		else fdir = rand()%4;
+	if( fdir == 1 ){
+		if( mapa[ _y/30 ][ ( _x+30 )/30  ] != 'X' ) {
+			_x += 30;
+		}else {
+			fdir = rand()%3;
+		}
 	}
+	
+	if( fdir == 2 ){
+		if( mapa[ ( _y+30 )/30 ][ _x/30 ] != 'X' ) {
+			_y += 30;
+		}else {
+			fdir = rand()%3;
+		}
+	}
+	
+//	if( fdir == 3 ){
+//		if( mapa[ ( _y+30 )/30 ][ _x/30 ] != 'X' ) {
+//			_y += 30;
+//		}else {
+//			fdir = rand()%4;
+//		}
+//	}
 	
 }
 
