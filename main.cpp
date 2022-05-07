@@ -30,7 +30,7 @@ int dir = 4;
 int px = 30*1, py=30*19;
 
 //direcci?n de movimiento y posici?n del barril
-int fdir;
+int fdir = 0;
 int _x=160, _y=180;
 
 
@@ -141,7 +141,7 @@ void moverbarril(){
 	
 	//evaluamos que cuando no haya X se mueva hacia abajo
 	else if (fdir == 1){
-		if (mapa[(_y+30/30)][(_x)/30] != 'X') _y+=30;
+		if (mapa[(_x+30/30)][(_y)/30] != 'X') _y+=30;
 		else fdir = rand()%4;
 	}
 	
