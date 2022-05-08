@@ -82,6 +82,7 @@ void dibujar_mapa(){
 		}
 	}
 	//Realizamos lo mismo con el sprite de la escalera
+	//Realizamos lo mismo con el sprite de la escalera
 	for(row = 0; row < MAXFILAS; row ++){
 		for(col = 0; col < MAXCOLS; col++){
 			if(mapa[row][col] == '-'){
@@ -129,6 +130,15 @@ void dibujar_barril(){
 	//draw_sprite(buffer, barril, 160, 180);
 	draw_sprite(buffer,barril,_x,_y);
 } 
+
+//cuando el barril toca a mario termina el juego 
+void choque_barril(){
+	if(py==_y && px==_x){
+		clear(mario);
+		clear(buffer);
+		exit (0);
+		}
+}
 
 void moverbarril(){
 	dibujar_barril();
@@ -183,6 +193,7 @@ void pintar(){
 	moverbarril();
 	coin;
 	pantalla();
+	choque_barril();
 }
 
 int main() {
