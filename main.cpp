@@ -1,6 +1,7 @@
 
 //Importa la libreria de allegro
 #include <allegro.h>
+#include <cstdlib>
 
 //Definimos filas y columnas del mapa
 #define MAXFILAS 23 //Para el eje y
@@ -14,16 +15,27 @@ BITMAP *escalera;
 BITMAP *mariobmp;
 BITMAP *mario;
 
+//en la segunda fase insertamos los objetos con los que interactua el personaje
 BITMAP *barril_parado;
+BITMAP *barrilbmp;  //creamos un buffer al igual que con el personaje principal
 BITMAP *barril;
+BITMAP *coin;
+BITMAP *llave;
 
 BITMAP *monito;
 BITMAP *peach;
+
+
 
 //Direccion con la que se mueve el personaje
 int dir = 4;
 //Posicion del personaje
 int px = 30*1, py=30*19;
+
+//direcci?n de movimiento y posici?n del barril
+int fdir = 1;
+int _x=30*5, _y=30*6;
+
 
 //Creamos la matriz para el mapa
 char mapa[MAXFILAS][MAXCOLS] = {
@@ -33,20 +45,20 @@ char mapa[MAXFILAS][MAXCOLS] = {
 	"X............XxX.............X",
 	"X.............-..............X",
 	"X.............-..............X",
-	"X             -           ...X",
+	"X             -  k   o    .|.X",
 	"XXXXXXXXXXXXXXXXXXXXXXxXXX...X",
 	"X.....................-......X",
 	"X.....................-......X",
-	"X.....                -      X",
+	"X|....      o         -      X",
 	"X..XXXXxXXXXXXXXXXXXXXXXXXXXXX",
 	"X......-.....................X",
 	"X......-.....................X",
 	"X......-.....................X",
-	"X      -          ...........X",
+	"X  o   -          ..|........X",
 	"XXXXXXXXXXXXXXXxXX...........X",
 	"X..............-.............X",
 	"X..............-.............X",
-	"X              -             X",
+	"X      o       -             X",
 	"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 };
 
@@ -78,6 +90,25 @@ void dibujar_mapa(){
 			if(mapa[row][col] == '-'){
 				draw_sprite(buffer, escalera, col*30, row*30);
 			}
+			
+			//en la fase 2 realizamos el mismo procedimiento para dibujar las monedas en el mapa
+			else if(mapa[row][col] == 'o'){
+				draw_sprite(buffer, coin, col*30, row*30);
+				
+				//aca evaluamos si la posicion de mario es igual a la de la moneda
+				if(py/30 == row && px/30 == col){
+					//de ser as? se inserta un espacio en blanco borrando la moneda
+						mapa[row][col] = ' ';
+				}
+			}
+			
+			else if(mapa[row][col] == 'k'){
+				draw_sprite(buffer,llave, col*30, row*30);
+			
+				if(py/30 == row && px/30 == col){
+						mapa[row][col] = ' ';
+				}
+			}
 		}
 	}
 	
@@ -90,6 +121,7 @@ void pantalla(){
 void dibujar_personaje(){
 	blit(mariobmp, mario, dir*33, 0, 0, 0, 33, 33);
 	draw_sprite(buffer, mario, px, py);
+	
 } 
 //Dibujamos al mono y a la princesa
 void dibujar_monito_peach(){
@@ -102,10 +134,57 @@ void dibujar_barril_parado(){
 	draw_sprite(buffer, barril_parado, 130, 70);
 } 
 
-//Dibujamos el barril que rueda
+//Dibujamos el barril que rodar? creando el peque?o buffer 
 void dibujar_barril(){
-	draw_sprite(buffer, barril, 160, 180);
+	blit(barrilbmp,barril,0,0,0,0,30,30);
+	//draw_sprite(buffer, barril, 160, 180);
+	draw_sprite(buffer,barril,_x,_y);
 } 
+
+//cuando el barril toca a mario termina el juego 
+void choque_barril(){
+	if(py==_y && px==_x){
+		clear(mario);
+		clear(buffer);
+		exit (0);
+		}
+}
+
+void moverbarril(){
+	dibujar_barril();
+	
+	if( mapa[ _y/30 ][ ( _x-30 )/30 ] == '|' ){
+		fdir = 2;
+	}
+	
+	if( fdir == 0 ){
+		if( mapa[ _y/30 ][ ( _x-30 )/30 ] != 'X' ) {
+			_x -= 30;
+		}else {
+			fdir = rand()%3;
+		}
+	}
+	
+	if( fdir == 1 ){
+		if( mapa[ _y/30 ][ ( _x+30 )/30  ] != 'X' ) {
+			_x += 30;
+		}else {
+			fdir = rand()%3;
+		}
+	}
+	
+	if( fdir == 2 ){
+		if( mapa[ ( _y+30 )/30 ][ _x/30 ] != 'X' ) {
+			_y += 30;
+		}else {
+			fdir = rand()%3;
+		}
+	}
+
+	
+}
+
+
 
 void pintar(){
 	clear(buffer);
@@ -114,7 +193,11 @@ void pintar(){
 	dibujar_monito_peach();
 	dibujar_barril_parado();
 	dibujar_barril();
+	llave;
+	moverbarril();
+	coin;
 	pantalla();
+	choque_barril();
 }
 
 int main() {
@@ -135,8 +218,15 @@ int main() {
 	
 	monito = load_bitmap("DK2.bmp",NULL);
 	peach = load_bitmap("peach.bmp",NULL);
+	
+	
+	//fase 2:creamos y cargamos el bitmat de los objetos
 	barril_parado = load_bitmap("barril_parado.bmp",NULL);
-	barril = load_bitmap("barril.bmp",NULL);
+	barril = create_bitmap(30,30);
+	barrilbmp = load_bitmap("barril.bmp",NULL);
+	coin = load_bitmap("coin.bmp",NULL);
+	llave = load_bitmap("llave.bmp",NULL);
+	
 	
 //	dibujar_personaje();
 	
@@ -211,5 +301,9 @@ int main() {
 	
 }
 END_OF_MAIN()
+
+
+
+
 
 

@@ -1,8 +1,8 @@
 [Editors]
 Order=0
-Focused=0
+Focused=-1
 [Editor_0]
-CursorCol=14
-CursorRow=163
-TopLine=154
+CursorCol=15
+CursorRow=186
+TopLine=157
 LeftChar=1
