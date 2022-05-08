@@ -20,9 +20,12 @@ BITMAP *barril_parado;
 BITMAP *barrilbmp;  //creamos un buffer al igual que con el personaje principal
 BITMAP *barril;
 BITMAP *coin;
+BITMAP *llave;
 
 BITMAP *monito;
 BITMAP *peach;
+
+
 
 //Direccion con la que se mueve el personaje
 int dir = 4;
@@ -42,7 +45,7 @@ char mapa[MAXFILAS][MAXCOLS] = {
 	"X............XxX.............X",
 	"X.............-..............X",
 	"X.............-..............X",
-	"X             -      o    .|.X",
+	"X             -  k   o    .|.X",
 	"XXXXXXXXXXXXXXXXXXXXXXxXXX...X",
 	"X.....................-......X",
 	"X.....................-......X",
@@ -82,7 +85,6 @@ void dibujar_mapa(){
 		}
 	}
 	//Realizamos lo mismo con el sprite de la escalera
-	//Realizamos lo mismo con el sprite de la escalera
 	for(row = 0; row < MAXFILAS; row ++){
 		for(col = 0; col < MAXCOLS; col++){
 			if(mapa[row][col] == '-'){
@@ -93,9 +95,17 @@ void dibujar_mapa(){
 			else if(mapa[row][col] == 'o'){
 				draw_sprite(buffer, coin, col*30, row*30);
 				
-				//ac? evaluamos si la posici?n de mario es igual a la de la moneda
+				//aca evaluamos si la posicion de mario es igual a la de la moneda
 				if(py/30 == row && px/30 == col){
 					//de ser as? se inserta un espacio en blanco borrando la moneda
+						mapa[row][col] = ' ';
+				}
+			}
+			
+			else if(mapa[row][col] == 'k'){
+				draw_sprite(buffer,llave, col*30, row*30);
+			
+				if(py/30 == row && px/30 == col){
 						mapa[row][col] = ' ';
 				}
 			}
@@ -170,14 +180,7 @@ void moverbarril(){
 			fdir = rand()%3;
 		}
 	}
-	
-//	if( fdir == 3 ){
-//		if( mapa[ ( _y+30 )/30 ][ _x/30 ] != 'X' ) {
-//			_y += 30;
-//		}else {
-//			fdir = rand()%4;
-//		}
-//	}
+
 	
 }
 
@@ -190,6 +193,7 @@ void pintar(){
 	dibujar_monito_peach();
 	dibujar_barril_parado();
 	dibujar_barril();
+	llave;
 	moverbarril();
 	coin;
 	pantalla();
@@ -221,6 +225,7 @@ int main() {
 	barril = create_bitmap(30,30);
 	barrilbmp = load_bitmap("barril.bmp",NULL);
 	coin = load_bitmap("coin.bmp",NULL);
+	llave = load_bitmap("llave.bmp",NULL);
 	
 	
 //	dibujar_personaje();
@@ -296,6 +301,7 @@ int main() {
 	
 }
 END_OF_MAIN()
+
 
 
 
