@@ -1,0 +1,4 @@
+Imagen 1: 33 x 32 px ( 0 - 33 )
+Imagen 2: 35 x 32 px ( 35 - 70 )
+Imagen 3: 31 x 32 px ( 71 - 102 )
+Imagen 4: 31 x 32 px ( 103 - 134 )
