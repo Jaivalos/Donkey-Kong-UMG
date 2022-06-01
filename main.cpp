@@ -15,6 +15,9 @@ BITMAP *escalera;
 BITMAP *mariobmp;
 BITMAP *mario;
 
+BITMAP *yoshibmp;
+BITMAP *yoshi;
+
 //en la segunda fase insertamos los objetos con los que interactua el personaje
 BITMAP *barril_parado;
 BITMAP *barrilbmp;  //creamos un buffer al igual que con el personaje principal
@@ -25,12 +28,12 @@ BITMAP *llave;
 BITMAP *monito;
 BITMAP *peach;
 
-
-
 //Direccion con la que se mueve el personaje
 int dir = 4;
+int dir2 = 4;
 //Posicion del personaje
 int px = 30*1, py=30*19;
+int ypx = 30*1, ypy=30*19;
 
 //direcci?n de movimiento y posici?n del barril
 int fdir = 1;
@@ -122,6 +125,10 @@ void dibujar_personaje(){
 	blit(mariobmp, mario, dir*33, 0, 0, 0, 33, 33);
 	draw_sprite(buffer, mario, px, py);
 	
+} 
+void dibujar_personaje2(){
+	blit(yoshibmp, yoshi, dir*33, 0, 0, 0, 33, 33);
+	draw_sprite(buffer, yoshi, px, py);
 } 
 //Dibujamos al mono y a la princesa
 void dibujar_monito_peach(){
@@ -293,6 +300,66 @@ int main() {
 //				dibujar_personaje();
 			}else dir = 4;
 		}
+		
+		
+		if(key[KEY_D]) dir2 = 0;
+		else if(key[A]) dir2 = 1;
+		else if(key[W]) dir2 = 2;
+		else if(key[S]) dir2 = 3;
+		
+		if(dir2 == 0){
+			if((mapa[ypy/30][(ypx+30)/30] != 'X') && (mapa[ypy/30][(ypx+30)/30] != '.') ){
+				ypx += 30;
+				dibujar_personaje();
+				dir2 = 4;
+//				dibujar_personaje();
+			}else dir2 = 4;
+		}
+		
+		if(dir == 1){
+			if((mapa[py/30][(px-30)/30] != 'X') && (mapa[py/30][(px-30)/30] != '.')){
+				px -= 30;
+				dibujar_personaje();
+				dir = 4;
+//				dibujar_personaje();
+			}else dir = 4;
+		}
+		
+		if(dir == 2){
+			if((mapa[(py-30)/30][px/30] != 'X') && (mapa[(py-30)/30][px/30] != '.')){
+				py -= 30;
+				dibujar_personaje();
+				dir = 4;
+//				dibujar_personaje();
+			}else{
+				py -= 30;
+				pintar();
+				rest(155);
+				
+				py -= 30;
+				pintar();
+				rest(155);
+				
+				py += 30;
+				pintar();
+				rest(155);
+				
+				py += 30;
+				pintar();
+				
+				dir = 4;
+			};
+		}
+		
+		if(dir == 3){
+			if((mapa[(py+30)/30][px/30] != 'X') && (mapa[(py+30)/30][px/30] != '.')){
+				py += 30;
+				dibujar_personaje();
+				dir = 4;
+//				dibujar_personaje();
+			}else dir = 4;
+		}
+		
 		
 		pintar();
 		
