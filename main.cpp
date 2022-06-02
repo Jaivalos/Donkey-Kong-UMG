@@ -99,7 +99,7 @@ void dibujar_mapa(){
 				draw_sprite(buffer, coin, col*30, row*30);
 				
 				//aca evaluamos si la posicion de mario es igual a la de la moneda
-				if(py/30 == row && px/30 == col){
+				if((py/30 == row && px/30 == col) || (ypy/30 == row && ypx/30 == col)){
 					//de ser as? se inserta un espacio en blanco borrando la moneda
 						mapa[row][col] = ' ';
 				}
@@ -150,8 +150,9 @@ void dibujar_barril(){
 
 //cuando el barril toca a mario termina el juego 
 void choque_barril(){
-	if(py==_y && px==_x){
+	if((ypy == _y && ypx == _x) || (py == _y && px == _x)){
 		clear(mario);
+		clear(yoshi);
 		clear(buffer);
 		exit (0);
 		}
