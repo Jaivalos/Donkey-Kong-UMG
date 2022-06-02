@@ -127,8 +127,8 @@ void dibujar_personaje(){
 	
 } 
 void dibujar_personaje2(){
-	blit(yoshibmp, yoshi, dir*33, 0, 0, 0, 33, 33);
-	draw_sprite(buffer, yoshi, px, py);
+	blit(yoshibmp, yoshi, dir2*33, 0, 0, 0, 33, 33);
+	draw_sprite(buffer, yoshi, ypx, ypy);
 } 
 //Dibujamos al mono y a la princesa
 void dibujar_monito_peach(){
@@ -197,6 +197,7 @@ void pintar(){
 	clear(buffer);
 	dibujar_mapa();
 	dibujar_personaje();
+	dibujar_personaje2();
 	dibujar_monito_peach();
 	dibujar_barril_parado();
 	dibujar_barril();
@@ -222,6 +223,9 @@ int main() {
 	 
 	mariobmp = load_bitmap("mario.bmp",NULL);
 	mario = create_bitmap(33,32);
+	
+	yoshibmp = load_bitmap("yoshi.bmp",NULL);
+	yoshi = create_bitmap(33,32);
 	
 	monito = load_bitmap("DK2.bmp",NULL);
 	peach = load_bitmap("peach.bmp",NULL);
@@ -303,61 +307,61 @@ int main() {
 		
 		
 		if(key[KEY_D]) dir2 = 0;
-		else if(key[A]) dir2 = 1;
-		else if(key[W]) dir2 = 2;
-		else if(key[S]) dir2 = 3;
+		else if(key[KEY_A]) dir2 = 1;
+		else if(key[KEY_W]) dir2 = 2;
+		else if(key[KEY_S]) dir2 = 3;
 		
 		if(dir2 == 0){
 			if((mapa[ypy/30][(ypx+30)/30] != 'X') && (mapa[ypy/30][(ypx+30)/30] != '.') ){
 				ypx += 30;
-				dibujar_personaje();
+				dibujar_personaje2();
 				dir2 = 4;
 //				dibujar_personaje();
 			}else dir2 = 4;
 		}
 		
-		if(dir == 1){
-			if((mapa[py/30][(px-30)/30] != 'X') && (mapa[py/30][(px-30)/30] != '.')){
-				px -= 30;
-				dibujar_personaje();
-				dir = 4;
+		if(dir2 == 1){
+			if((mapa[ypy/30][(ypx-30)/30] != 'X') && (mapa[ypy/30][(ypx-30)/30] != '.')){
+				ypx -= 30;
+				dibujar_personaje2();
+				dir2 = 4;
 //				dibujar_personaje();
-			}else dir = 4;
+			}else dir2 = 4;
 		}
 		
-		if(dir == 2){
-			if((mapa[(py-30)/30][px/30] != 'X') && (mapa[(py-30)/30][px/30] != '.')){
-				py -= 30;
-				dibujar_personaje();
-				dir = 4;
+		if(dir2 == 2){
+			if((mapa[(ypy-30)/30][ypx/30] != 'X') && (mapa[(ypy-30)/30][ypx/30] != '.')){
+				ypy -= 30;
+				dibujar_personaje2();
+				dir2 = 4;
 //				dibujar_personaje();
 			}else{
-				py -= 30;
+				ypy -= 30;
 				pintar();
 				rest(155);
 				
-				py -= 30;
+				ypy -= 30;
 				pintar();
 				rest(155);
 				
-				py += 30;
+				ypy += 30;
 				pintar();
 				rest(155);
 				
-				py += 30;
+				ypy += 30;
 				pintar();
 				
-				dir = 4;
+				dir2 = 4;
 			};
 		}
 		
-		if(dir == 3){
-			if((mapa[(py+30)/30][px/30] != 'X') && (mapa[(py+30)/30][px/30] != '.')){
-				py += 30;
-				dibujar_personaje();
-				dir = 4;
+		if(dir2 == 3){
+			if((mapa[(ypy+30)/30][ypx/30] != 'X') && (mapa[(ypy+30)/30][ypx/30] != '.')){
+				ypy += 30;
+				dibujar_personaje2();
+				dir2 = 4;
 //				dibujar_personaje();
-			}else dir = 4;
+			}else dir2 = 4;
 		}
 		
 		
